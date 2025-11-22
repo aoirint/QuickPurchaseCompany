@@ -22,6 +22,8 @@ Create a new directory `lib` at the repository root.
 Copy a DLL file into `lib/` from `C:/Program Files (x86)/Steam/steamapps/common/Lethal Company`.
 
 - `Lethal Company_Data/Managed/Assembly-CSharp.dll`
+- `Lethal Company_Data/Managed/Unity.Mathematics.dll`
+- `Lethal Company_Data/Managed/Unity.Netcode.Runtime.dll`
 
 ## Build
 

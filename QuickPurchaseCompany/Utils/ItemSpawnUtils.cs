@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Logging;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ internal static class ItemSpawnUtils
     internal static ManualLogSource Logger => QuickPurchaseCompany.Logger;
 
     private static GameObject cachedShipGameObject;
+
+    private static Dictionary<int, float> cachedSpawnOffsetXByItemId = new();
 
     public static GameObject GetShipGameObject()
     {
@@ -55,6 +59,36 @@ internal static class ItemSpawnUtils
         return playerSpawnPositionTransform.position;
     }
 
+    public static float GetSpawnOffsetXByItemId(int itemId)
+    {
+        if (cachedSpawnOffsetXByItemId.TryGetValue(itemId, out var cachedOffsetX))
+        {
+            return cachedOffsetX;
+        }
+
+        // Range for out of bounds items in the base game
+        const float offsetXRange = 0.7f;
+
+        var itemIdUint = (uint) itemId;
+
+        // Randomize the seed to improve distribution
+        var randomSeed = math.hash(new uint4(itemIdUint, 0xDEADBEEFu, 0x12345678u, 0x87654321u));
+        if (randomSeed == 0u)
+        {
+            // Unity.Mathematics.Random does not allow seed 0. Use 1 instead.
+            randomSeed = 1u;
+        }
+
+        var random = new Unity.Mathematics.Random(randomSeed);
+        float offsetX =  random.NextFloat(-offsetXRange, offsetXRange);
+
+        cachedSpawnOffsetXByItemId[itemId] = offsetX;
+
+        Logger.LogDebug($"Generated offset X for an item ID. itemId={itemId}, offsetX={offsetX}");
+
+        return offsetX;
+    }
+
     public static bool SpawnItemInShip(Item item)
     {
         var startOfRound = StartOfRound.Instance;
@@ -93,11 +127,10 @@ internal static class ItemSpawnUtils
         }
         var baseSpawnPosition = baseSpawnPositionNullable.Value;
 
-        // Default position for out of bounds items in the base game
-        const float offsetXRange = 0.7f;
+        float offsetX = GetSpawnOffsetXByItemId(item.itemId);
 
-        float offsetX = Random.Range(-offsetXRange, offsetXRange);
-        const float offsetZ = 2.0f;
+        // Default position for out of bounds items in the base game: (random(-0.7f, 0.7f), 2.0f, 0.5f)
+        const float offsetZ = 1.0f; // Slightly forward to the center of the ship
         const float offsetY = 0.5f;
 
         var spawnPosition = baseSpawnPosition + new Vector3(offsetX, offsetY, offsetZ);
