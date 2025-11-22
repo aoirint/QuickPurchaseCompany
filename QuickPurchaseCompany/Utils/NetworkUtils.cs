@@ -16,6 +16,6 @@ internal static class NetworkUtils
             return false;
         }
 
-        return ! networkManager.IsServer;
+        return networkManager.IsServer;
     }
 }
