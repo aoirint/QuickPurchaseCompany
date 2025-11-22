@@ -38,31 +38,21 @@ internal static class ItemSpawnUtils
             return null;
         }
 
-        var shipPositions = startOfRound.insideShipPositions;
-        if (shipPositions == null) {
+        var playerSpawnPositions = startOfRound.playerSpawnPositions;
+        if (playerSpawnPositions == null) {
             // Invalid state
-            Logger.LogError("StartOfRound.Instance.insideShipPositions is null.");
+            Logger.LogError("StartOfRound.Instance.playerSpawnPositions is null.");
             return null;
         }
 
-        const int shipPositionId = 10;
-        var shipPositionCount = shipPositions.Count();
-        if (shipPositionCount <= shipPositionId) {
+        var playerSpawnPositionTransform = playerSpawnPositions.ElementAtOrDefault(1);
+        if (playerSpawnPositionTransform == null) {
             // Invalid state
-            Logger.LogError($"Ship position ID is out of range. shipPositionId={shipPositionId} count={shipPositionCount}");
+            Logger.LogError("Player spawn position is null for ID 1.");
             return null;
         }
 
-        var shipPosition = shipPositions[shipPositionId];
-        if (shipPosition == null) {
-            // Invalid state
-            Logger.LogError($"Ship position is null for ID. shipPositionId={shipPositionId}");
-            return null;
-        }
-
-        var spawnPosition = shipPosition.position + new Vector3(0f, 0f, 1.5f);
-
-        return spawnPosition;
+        return playerSpawnPositionTransform.position;
     }
 
     public static bool SpawnItemInShip(Item item)
@@ -103,12 +93,14 @@ internal static class ItemSpawnUtils
         }
         var baseSpawnPosition = baseSpawnPositionNullable.Value;
 
-        const float offset = 0.2f;
-        var spawnPosition = baseSpawnPosition + new Vector3(
-            Random.Range(-offset, offset),
-            0f,
-            Random.Range(-offset, offset)
-        );
+        // Default position for out of bounds items in the base game
+        const float offsetXRange = 0.7f;
+
+        float offsetX = Random.Range(-offsetXRange, offsetXRange);
+        const float offsetZ = 2.0f;
+        const float offsetY = 0.5f;
+
+        var spawnPosition = baseSpawnPosition + new Vector3(offsetX, offsetY, offsetZ);
 
         var gameObject = Object.Instantiate(
             spawnPrefab,
