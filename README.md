@@ -114,7 +114,22 @@ Inspired by the following projects:
 9. Issue a command: `wal`.
 10. Confirm that a walkie is spawned on the ship.
 
-### 8. Purchase on the first day after ejected
+### 8. Purchase on the third day orbit after landing on the company and routing on a moon
+
+1. Start a new game.
+2. Land on `Experimentation`.
+3. Take off.
+4. Open the terminal.
+5. Issue a command: `comp`.
+6. Land on `Gordion`.
+7. Take off.
+8. Open the terminal.
+9. Issue a command: `exp`.
+10. Issue a command: `wal`.
+11. Issue a command: `help`.
+12. Confirm that the terminal shows `1 purchased items on route.`.
+
+### 9. Purchase on the first day after ejected
 
 1. Start a new game.
 2. Land on `Experimentation`.
@@ -126,7 +141,7 @@ Inspired by the following projects:
 8. Issue a command: `wal`.
 9. Confirm that a walkie is spawned on the ship.
 
-### 9. Purchase on the second day orbit then land on the company
+### 10. Purchase on the second day orbit then land on the company
 
 1. Start a new game.
 2. Land on `Experimentation`.
@@ -139,7 +154,7 @@ Inspired by the following projects:
 9. Land on `Gordion`.
 10. Confirm that the dropship arrives and contains a walkie.
 
-### 10. Purchase on the second day orbit then land and purchase on the company
+### 11. Purchase on the second day orbit then land and purchase on the company
 
 1. Start a new game.
 2. Land on `Experimentation`.
