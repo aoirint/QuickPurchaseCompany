@@ -13,6 +13,7 @@ internal static class RoundHelpers
         if (! RoundUtils.IsInOrbit())
         {
             // Landed
+            Logger.LogDebug("Not in orbit.");
             return false;
         }
 
@@ -41,6 +42,7 @@ internal static class RoundHelpers
         if (RoundUtils.IsInOrbit())
         {
             // In orbit
+            Logger.LogDebug("In orbit.");
             return false;
         }
 
