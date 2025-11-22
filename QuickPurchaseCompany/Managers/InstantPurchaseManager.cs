@@ -111,13 +111,22 @@ internal class InstantPurchaseManager
             if (item == null)
             {
                 Logger.LogError($"Failed to get bought item. buyableItemIndex={buyableItemIndex}");
-                continue;
+                return new SpawnPreparedInstantPurchasedItemsResult(
+                    succeeded: false,
+                    dropShipBoughtItemIndexes: [],
+                    instantBoughtItemIndexes: []
+                );
             }
 
             var spawnSucceeded = ItemSpawnUtils.SpawnItemInShip(item: item);
             if (!spawnSucceeded)
             {
                 Logger.LogError($"Failed to spawn instant purchased item. item.name={item.name}");
+                return new SpawnPreparedInstantPurchasedItemsResult(
+                    succeeded: false,
+                    dropShipBoughtItemIndexes: [],
+                    instantBoughtItemIndexes: []
+                );
             }
         }
 
