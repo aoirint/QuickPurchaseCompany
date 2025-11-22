@@ -1,3 +1,4 @@
+using System.Linq;
 using BepInEx.Logging;
 
 namespace QuickPurchaseCompany.Utils;
@@ -90,5 +91,31 @@ internal static class RoundUtils
 
         var sceneName = currentLevel.sceneName;
         return IsSceneNameCompany(sceneName);
+    }
+
+    public static SelectableLevel GetLevelById(int levelId)
+    {
+        var startOfRound = StartOfRound.Instance;
+        if (startOfRound == null) {
+            // Invalid state
+            Logger.LogError("StartOfRound.Instance is null.");
+            return null;
+        }
+
+        var levels = startOfRound.levels;
+        if (levels == null) {
+            // Invalid state
+            Logger.LogError("StartOfRound.Instance.levels is null.");
+            return null;
+        }
+
+        var level = levels.ElementAtOrDefault(levelId);
+        if (level == null)
+        {
+            Logger.LogError($"Level not found. levelId={levelId}");
+            return null;
+        }
+
+        return level;
     }
 }

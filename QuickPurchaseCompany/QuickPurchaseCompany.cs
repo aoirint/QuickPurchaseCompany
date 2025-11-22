@@ -21,6 +21,8 @@ public class QuickPurchaseCompany : BaseUnityPlugin
 
     internal static LandingHistoryManager landingHistoryManager = new();
 
+    internal static RoutingHistoryManager routingHistoryManager = new();
+
     private void Awake()
     {
         Logger = base.Logger;
