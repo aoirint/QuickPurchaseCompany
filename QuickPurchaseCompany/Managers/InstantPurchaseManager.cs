@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BepInEx.Logging;
+using QuickPurchaseCompany.Helpers;
 using QuickPurchaseCompany.Utils;
 
 namespace QuickPurchaseCompany.Managers;
@@ -51,20 +52,17 @@ internal class InstantPurchaseManager
     {
         Logger.LogDebug("Checking if instant purchase is allowed.");
 
-        var isFirstDayOrbit = RoundUtils.IsFirstDayOrbit();
-        var isLandedOnCompany = RoundUtils.IsLandedOnCompany();
-
-        var landingHistoryManager = QuickPurchaseCompany.landingHistoryManager;
-        var lastLandedSceneName = landingHistoryManager.GetLandingHistory().LastOrDefault();
-        var isInOrbitAndLastLandedOnCompany = RoundUtils.IsInOrbit() && RoundUtils.IsSceneNameCompany(lastLandedSceneName);
+        var isFirstDayOrbit = RoundHelpers.IsFirstDayOrbit();
+        var isLandedOnCompany = RoundHelpers.IsLandedOnCompany();
+        var isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany = RoundHelpers.IsInOrbitAndLastLandedOnCompanyAndRoutingOnCompany();
 
         Logger.LogDebug(
             $"IsFirstDayOrbit={isFirstDayOrbit}" +
             $" IsLandedOnCompany={isLandedOnCompany}" +
-            $" isInOrbitAndLastLandedOnCompany={isInOrbitAndLastLandedOnCompany}"
+            $" isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany={isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany}"
         );
 
-        return isFirstDayOrbit || isLandedOnCompany || isInOrbitAndLastLandedOnCompany;
+        return isFirstDayOrbit || isLandedOnCompany || isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany;
     }
 
     public PrepareInstantPurchaseResult PrepareInstantPurchase(List<int> boughtItemIndexes)
