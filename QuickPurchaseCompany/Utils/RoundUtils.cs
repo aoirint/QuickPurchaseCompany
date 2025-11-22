@@ -6,7 +6,7 @@ internal static class RoundUtils
 {
     internal static ManualLogSource Logger => QuickPurchaseCompany.Logger;
 
-    public static bool IsFirstDayOrbit()
+    public static bool IsInOrbit()
     {
         var startOfRound = StartOfRound.Instance;
         if (startOfRound == null) {
@@ -21,6 +21,24 @@ internal static class RoundUtils
             return false;
         }
 
+        return true;
+    }
+
+    public static bool IsFirstDayOrbit()
+    {
+        if (!IsInOrbit())
+        {
+            // Landed
+            return false;
+        }
+
+        var startOfRound = StartOfRound.Instance;
+        if (startOfRound == null) {
+            // Invalid state
+            Logger.LogError("StartOfRound.Instance is null.");
+            return false;
+        }
+
         var gameStats = startOfRound.gameStats;
         if (gameStats == null) {
             // Invalid state
@@ -32,6 +50,12 @@ internal static class RoundUtils
         Logger.LogDebug($"daysSpent={daysSpent}");
 
         return daysSpent == 0;
+    }
+
+    public static bool IsSceneNameCompany(string sceneName)
+    {
+        Logger.LogDebug($"IsSceneNameCompany? sceneName={sceneName}");
+        return sceneName == "CompanyBuilding";
     }
 
     public static bool IsLandedOnCompany()
@@ -65,8 +89,6 @@ internal static class RoundUtils
         }
 
         var sceneName = currentLevel.sceneName;
-        Logger.LogDebug($"sceneName={sceneName}");
-
-        return sceneName == "CompanyBuilding";
+        return IsSceneNameCompany(sceneName);
     }
 }

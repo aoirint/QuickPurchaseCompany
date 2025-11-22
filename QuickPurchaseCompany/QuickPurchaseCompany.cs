@@ -19,6 +19,8 @@ public class QuickPurchaseCompany : BaseUnityPlugin
 
     internal static InstantPurchaseManager instantPurchaseManager = new();
 
+    internal static LandingHistoryManager landingHistoryManager = new();
+
     private void Awake()
     {
         Logger = base.Logger;
