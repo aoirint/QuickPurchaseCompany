@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Collections.Generic;
 using BepInEx.Logging;
 using QuickPurchaseCompany.Helpers;
@@ -7,17 +9,14 @@ namespace QuickPurchaseCompany.Managers;
 
 internal sealed class PrepareInstantPurchaseResult
 {
-    public bool Succeeded { get; }
     public List<int> DropShipBoughtItemIndexes { get; }
     public List<int> InstantBoughtItemIndexes { get; }
 
     public PrepareInstantPurchaseResult(
-        bool succeeded,
         List<int> dropShipBoughtItemIndexes,
         List<int> instantBoughtItemIndexes
     )
     {
-        Succeeded = succeeded;
         DropShipBoughtItemIndexes = dropShipBoughtItemIndexes;
         InstantBoughtItemIndexes = instantBoughtItemIndexes;
     }
@@ -25,17 +24,14 @@ internal sealed class PrepareInstantPurchaseResult
 
 internal sealed class SpawnPreparedInstantPurchasedItemsResult
 {
-    public bool Succeeded { get; }
     public List<int> DropShipBoughtItemIndexes { get; }
     public List<int> InstantBoughtItemIndexes { get; }
 
     public SpawnPreparedInstantPurchasedItemsResult(
-        bool succeeded,
         List<int> dropShipBoughtItemIndexes,
         List<int> instantBoughtItemIndexes
     )
     {
-        Succeeded = succeeded;
         DropShipBoughtItemIndexes = dropShipBoughtItemIndexes;
         InstantBoughtItemIndexes = instantBoughtItemIndexes;
     }
@@ -45,7 +41,7 @@ internal class InstantPurchaseManager
 {
     internal static ManualLogSource Logger => QuickPurchaseCompany.Logger;
 
-    private PrepareInstantPurchaseResult preparedInstantPurchaseResult;
+    private PrepareInstantPurchaseResult? preparedInstantPurchaseResult;
 
     private static bool IsInstantPurchaseAllowed()
     {
@@ -64,25 +60,20 @@ internal class InstantPurchaseManager
         return isFirstDayOrbit || isLandedOnCompany || isInOrbitAndLastLandedOnCompanyAndRoutingToCompany;
     }
 
-    public PrepareInstantPurchaseResult PrepareInstantPurchase(List<int> boughtItemIndexes)
+    public PrepareInstantPurchaseResult? PrepareInstantPurchase(List<int> boughtItemIndexes)
     {
         if (!IsInstantPurchaseAllowed())
         {
             Logger.LogDebug("Instant purchase is not allowed in the current game state.");
-            return new PrepareInstantPurchaseResult(
-                succeeded: false,
-                dropShipBoughtItemIndexes: [],
-                instantBoughtItemIndexes: []
-            );
+            return null;
         }
 
         return PrepareInstantPurchaseUnchecked(boughtItemIndexes: boughtItemIndexes);
     }
 
-    public PrepareInstantPurchaseResult PrepareInstantPurchaseUnchecked(List<int> boughtItemIndexes)
+    public PrepareInstantPurchaseResult? PrepareInstantPurchaseUnchecked(List<int> boughtItemIndexes)
     {
         var prepareInstantPurchaseResult = new PrepareInstantPurchaseResult(
-            succeeded: true,
             dropShipBoughtItemIndexes: [],
             instantBoughtItemIndexes: boughtItemIndexes
         );
@@ -92,21 +83,17 @@ internal class InstantPurchaseManager
         return prepareInstantPurchaseResult;
     }
 
-    public PrepareInstantPurchaseResult GetPreparedInstantPurchaseResult()
+    public PrepareInstantPurchaseResult? GetPreparedInstantPurchaseResult()
     {
         return preparedInstantPurchaseResult;
     }
 
-    public SpawnPreparedInstantPurchasedItemsResult SpawnPreparedInstantPurchasedItems()
+    public SpawnPreparedInstantPurchasedItemsResult? SpawnPreparedInstantPurchasedItems()
     {
-        if (preparedInstantPurchaseResult == null || !preparedInstantPurchaseResult.Succeeded)
+        if (preparedInstantPurchaseResult == null)
         {
             Logger.LogDebug("No prepared instant purchase to spawn.");
-            return new SpawnPreparedInstantPurchasedItemsResult(
-                succeeded: false,
-                dropShipBoughtItemIndexes: [],
-                instantBoughtItemIndexes: []
-            );
+            return null;
         }
 
         var instantBoughtItemIndexes = preparedInstantPurchaseResult.InstantBoughtItemIndexes;
@@ -117,27 +104,18 @@ internal class InstantPurchaseManager
             if (item == null)
             {
                 Logger.LogError($"Failed to get bought item. buyableItemIndex={buyableItemIndex}");
-                return new SpawnPreparedInstantPurchasedItemsResult(
-                    succeeded: false,
-                    dropShipBoughtItemIndexes: [],
-                    instantBoughtItemIndexes: []
-                );
+                return null;
             }
 
             var spawnSucceeded = ItemSpawnUtils.SpawnItemInShip(item: item);
             if (!spawnSucceeded)
             {
                 Logger.LogError($"Failed to spawn instant purchased item. item.name={item.name}");
-                return new SpawnPreparedInstantPurchasedItemsResult(
-                    succeeded: false,
-                    dropShipBoughtItemIndexes: [],
-                    instantBoughtItemIndexes: []
-                );
+                return null;
             }
         }
 
         var result = new SpawnPreparedInstantPurchasedItemsResult(
-            succeeded: true,
             dropShipBoughtItemIndexes: preparedInstantPurchaseResult.DropShipBoughtItemIndexes,
             instantBoughtItemIndexes: preparedInstantPurchaseResult.InstantBoughtItemIndexes
         );

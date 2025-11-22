@@ -38,7 +38,7 @@ internal class TerminalPatch
         var result = instantPurchaseManager.PrepareInstantPurchase(
             boughtItemIndexes: orderedItemsFromTerminal
         );
-        if (!result.Succeeded)
+        if (result == null)
         {
             Logger.LogDebug("Prepare instant purchase failed or not allowed. Skipping instant purchase logic.");
             return;
@@ -78,7 +78,7 @@ internal class TerminalPatch
         Logger.LogDebug("Spawning prepared instant purchased items.");
 
         var result = instantPurchaseManager.SpawnPreparedInstantPurchasedItems();
-        if (!result.Succeeded)
+        if (result == null)
         {
             Logger.LogDebug("Spawning prepared instant purchased items failed or none to spawn.");
             return;
