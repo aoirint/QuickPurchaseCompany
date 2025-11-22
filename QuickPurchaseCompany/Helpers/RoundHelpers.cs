@@ -63,7 +63,7 @@ internal static class RoundHelpers
         return RoundUtils.IsSceneNameCompany(sceneName);
     }
 
-    public static bool IsInOrbitAndLastLandedOnCompanyAndRoutingOnCompany()
+    public static bool IsInOrbitAndLastLandedOnCompanyAndRoutingToCompany()
     {
         if (! RoundUtils.IsInOrbit())
         {
@@ -100,10 +100,10 @@ internal static class RoundHelpers
             return false;
         }
 
-        if (! RoundUtils.IsRoutingOnCompany())
+        if (! RoundUtils.IsRoutingToCompany())
         {
-            // Not routing on company
-            Logger.LogDebug("Not routing on company.");
+            // Not routing to company
+            Logger.LogDebug("Not routing to company.");
             return false;
         }
 

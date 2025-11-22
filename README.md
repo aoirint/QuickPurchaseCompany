@@ -7,7 +7,7 @@ Lethal Company Mod to make the item purchase process faster in a fair way.
 - Directly spawn the purchased items on the ship.
   - The first day orbit
   - Landed on the Company
-  - The next day orbit after landing on the company and routing on the company
+  - The next day orbit after landing on the company and routing to the company
 
 ## Development
 
@@ -114,7 +114,7 @@ Inspired by the following projects:
 9. Issue a command: `wal`.
 10. Confirm that a walkie is spawned on the ship.
 
-### 8. Purchase on the third day orbit after landing on the company and routing on a moon
+### 8. Purchase on the third day orbit after landing on the company and routing to a moon
 
 1. Start a new game.
 2. Land on `Experimentation`.

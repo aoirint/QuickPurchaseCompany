@@ -54,15 +54,15 @@ internal class InstantPurchaseManager
 
         var isFirstDayOrbit = RoundHelpers.IsFirstDayOrbit();
         var isLandedOnCompany = RoundHelpers.IsLandedOnCompany();
-        var isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany = RoundHelpers.IsInOrbitAndLastLandedOnCompanyAndRoutingOnCompany();
+        var isInOrbitAndLastLandedOnCompanyAndRoutingToCompany = RoundHelpers.IsInOrbitAndLastLandedOnCompanyAndRoutingToCompany();
 
         Logger.LogDebug(
             $"IsFirstDayOrbit={isFirstDayOrbit}" +
             $" IsLandedOnCompany={isLandedOnCompany}" +
-            $" isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany={isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany}"
+            $" isInOrbitAndLastLandedOnCompanyAndRoutingToCompany={isInOrbitAndLastLandedOnCompanyAndRoutingToCompany}"
         );
 
-        return isFirstDayOrbit || isLandedOnCompany || isInOrbitAndLastLandedOnCompanyAndRoutingOnCompany;
+        return isFirstDayOrbit || isLandedOnCompany || isInOrbitAndLastLandedOnCompanyAndRoutingToCompany;
     }
 
     public PrepareInstantPurchaseResult PrepareInstantPurchase(List<int> boughtItemIndexes)

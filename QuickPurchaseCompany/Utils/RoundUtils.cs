@@ -31,7 +31,7 @@ internal static class RoundUtils
         return sceneName == "CompanyBuilding";
     }
 
-    public static bool IsRoutingOnCompany()
+    public static bool IsRoutingToCompany()
     {
         var startOfRound = StartOfRound.Instance;
         if (startOfRound == null) {
