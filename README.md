@@ -7,7 +7,7 @@ Lethal Company Mod to make the item purchase process faster in a fair way.
 - Directly spawn the purchased items on the ship.
   - The first day orbit
   - Landed on the Company
-  - TODO: The next day orbit after landing on the company and before routing to a moon
+  - The next day orbit after landing on the company and routing on the company
 
 ## Development
 
