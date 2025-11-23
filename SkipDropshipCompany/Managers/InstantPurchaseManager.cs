@@ -47,17 +47,30 @@ internal class InstantPurchaseManager
     {
         Logger.LogDebug("Checking if instant purchase is allowed.");
 
-        var isFirstDayOrbit = RoundHelpers.IsFirstDayOrbit();
+        var isFirstDayRerouteRequiredConfig = SkipDropshipCompany.isFirstDayRerouteRequiredConfig;
+        var isFirstDayRerouteRequired = isFirstDayRerouteRequiredConfig?.Value ?? false;
+
+        Logger.LogDebug($"Configs: isFirstDayRerouteRequired={isFirstDayRerouteRequired}");
+
         var isLandedOnCompany = RoundHelpers.IsLandedOnCompany();
+        var IsInFirstDayOrbit = RoundHelpers.IsInFirstDayOrbit();
+        var IsInFirstDayOrbitAndRoutingToCompany = RoundHelpers.IsInFirstDayOrbitAndRoutingToCompany();
         var isInOrbitAndLastLandedOnCompanyAndRoutingToCompany = RoundHelpers.IsInOrbitAndLastLandedOnCompanyAndRoutingToCompany();
 
         Logger.LogDebug(
-            $"IsFirstDayOrbit={isFirstDayOrbit}" +
+            "Flags:" +
             $" IsLandedOnCompany={isLandedOnCompany}" +
+            $" IsInFirstDayOrbit={IsInFirstDayOrbit}" +
+            $" IsInFirstDayOrbitAndRoutingToCompany={IsInFirstDayOrbitAndRoutingToCompany}" +
             $" isInOrbitAndLastLandedOnCompanyAndRoutingToCompany={isInOrbitAndLastLandedOnCompanyAndRoutingToCompany}"
         );
 
-        return isFirstDayOrbit || isLandedOnCompany || isInOrbitAndLastLandedOnCompanyAndRoutingToCompany;
+        return (
+            isLandedOnCompany ||
+            (!isFirstDayRerouteRequired && IsInFirstDayOrbit) ||
+            IsInFirstDayOrbitAndRoutingToCompany ||
+            isInOrbitAndLastLandedOnCompanyAndRoutingToCompany
+        );
     }
 
     public PrepareInstantPurchaseResult? PrepareInstantPurchase(List<int> boughtItemIndexes)

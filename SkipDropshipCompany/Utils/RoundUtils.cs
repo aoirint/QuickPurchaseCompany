@@ -26,6 +26,30 @@ internal static class RoundUtils
         return true;
     }
 
+    public static bool IsFirstDay()
+    {
+        var startOfRound = StartOfRound.Instance;
+        if (startOfRound == null)
+        {
+            // Invalid state
+            Logger.LogError("StartOfRound.Instance is null.");
+            return false;
+        }
+
+        var gameStats = startOfRound.gameStats;
+        if (gameStats == null)
+        {
+            // Invalid state
+            Logger.LogError("StartOfRound.Instance.gameStats is null.");
+            return false;
+        }
+
+        var daysSpent = gameStats.daysSpent;
+        Logger.LogDebug($"daysSpent={daysSpent}");
+
+        return daysSpent == 0;
+    }
+
     public static bool IsSceneNameCompany(string sceneName)
     {
         Logger.LogDebug($"IsSceneNameCompany? sceneName={sceneName}");

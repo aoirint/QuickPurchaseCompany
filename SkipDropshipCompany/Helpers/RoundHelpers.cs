@@ -8,7 +8,7 @@ internal static class RoundHelpers
 {
     internal static ManualLogSource Logger => SkipDropshipCompany.Logger;
 
-    public static bool IsFirstDayOrbit()
+    public static bool IsInFirstDayOrbit()
     {
         if (!RoundUtils.IsInOrbit())
         {
@@ -17,26 +17,33 @@ internal static class RoundHelpers
             return false;
         }
 
-        var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null)
+        if (!RoundUtils.IsFirstDay())
         {
-            // Invalid state
-            Logger.LogError("StartOfRound.Instance is null.");
+            // Not first day
+            Logger.LogDebug("Not first day.");
             return false;
         }
 
-        var gameStats = startOfRound.gameStats;
-        if (gameStats == null)
+        return true;
+    }
+
+    public static bool IsInFirstDayOrbitAndRoutingToCompany()
+    {
+        if (!IsInFirstDayOrbit())
         {
-            // Invalid state
-            Logger.LogError("StartOfRound.Instance.gameStats is null.");
+            // Not in first day orbit
+            Logger.LogDebug("Not in first day orbit.");
             return false;
         }
 
-        var daysSpent = gameStats.daysSpent;
-        Logger.LogDebug($"daysSpent={daysSpent}");
+        if (!RoundUtils.IsRoutingToCompany())
+        {
+            // Not routing to company
+            Logger.LogDebug("Not routing to company.");
+            return false;
+        }
 
-        return daysSpent == 0;
+        return true;
     }
 
     public static bool IsLandedOnCompany()
@@ -48,25 +55,14 @@ internal static class RoundHelpers
             return false;
         }
 
-        var roundManager = RoundManager.Instance;
-        if (roundManager == null)
+        if (!RoundUtils.IsRoutingToCompany())
         {
-            // Invalid state
-            Logger.LogError("RoundManager.Instance is null.");
+            // Not routing to company
+            Logger.LogDebug("Not routing to company.");
             return false;
         }
 
-        // Current selected level in orbit / Current landed level
-        var currentLevel = roundManager.currentLevel;
-        if (currentLevel == null)
-        {
-            // Invalid state
-            Logger.LogError("RoundManager.Instance.currentLevel is null.");
-            return false;
-        }
-
-        var sceneName = currentLevel.sceneName;
-        return RoundUtils.IsSceneNameCompany(sceneName);
+        return true;
     }
 
     public static bool IsInOrbitAndLastLandedOnCompanyAndRoutingToCompany()
@@ -78,31 +74,10 @@ internal static class RoundHelpers
             return false;
         }
 
-        var landingHistoryManager = SkipDropshipCompany.landingHistoryManager;
-        if (landingHistoryManager == null)
-        {
-            Logger.LogError("LandingHistoryManager is null.");
-            return false;
-        }
-
-        var landingHistory = landingHistoryManager.GetLandingHistory();
-        if (landingHistory == null)
-        {
-            Logger.LogError("Landing history is null.");
-            return false;
-        }
-
-        var lastLandedSceneName = landingHistory.LastOrDefault();
-        if (lastLandedSceneName == null)
-        {
-            Logger.LogDebug("Last landed scene name is null.");
-            return false;
-        }
-
-        if (!RoundUtils.IsSceneNameCompany(lastLandedSceneName))
+        if (!LandingHistoryHelpers.IsLastLandedOnCompany())
         {
             // Last landed level is not company
-            Logger.LogDebug("Last landed scene is not company.");
+            Logger.LogDebug("Last landed level is not company.");
             return false;
         }
 
