@@ -57,6 +57,8 @@ No. Only items purchased after the conditions are met will be delivered directly
 
 However, if you purchase additional items before the dropship arrives, they will be delivered together with the previous ones to the ship.
 
+This behaviour may be changed in the future version since it depends on the base game implementation.
+
 ### Is it compatible with FasterItemDropship/LC_FasterRocket?
 
 At least the following versions are assumed to be compatible.
