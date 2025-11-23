@@ -29,8 +29,8 @@ public class SkipDropshipCompany : BaseUnityPlugin
         Logger = base.Logger;
 
         isFirstDayRerouteRequiredConfig = Config.Bind(
-            "SkipDropshipCompany",
-            "Requires rerouting on the first day",
+            "General",
+            "RequireReroutingOnFirstDay",
             false,
             "If true, rerouting to the company will be required to skip the dropship on the first day."
         );
