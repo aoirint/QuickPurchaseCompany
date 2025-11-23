@@ -93,6 +93,11 @@ jobs:
             echo "| App Version | ${{ steps.generate-version.outputs.app_version }} |"
             echo "| Git Version | [${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }}) |"
             echo "| Time Duration | ${TIME_DURATION_S}s |"
-            echo "| Artifact | [Download](${{ steps.upload-artifact.outputs.artifact-url }}) |"
-            echo "| Artifact Digest | \`${{ steps.upload-artifact.outputs.artifact-digest }}\` |"
           } >> "${GITHUB_STEP_SUMMARY}"
+          
+          if [ "${{ steps.upload-artifact.outcome }}" = "success" ]; then
+            {
+              echo "| Artifact | [Download](${{ steps.upload-artifact.outputs.artifact-url }}) |"
+              echo "| Artifact Digest | \`${{ steps.upload-artifact.outputs.artifact-digest }}\` |"
+            } >> "${GITHUB_STEP_SUMMARY}"
+          fi
