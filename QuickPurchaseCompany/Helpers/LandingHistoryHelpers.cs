@@ -16,7 +16,7 @@ internal static class LandingHistoryHelpers
         }
 
         Logger.LogDebug($"Adding landing history. sceneName={sceneName}");
-        if (! landingHistoryManager.AddLandingHistory(sceneName: sceneName))
+        if (!landingHistoryManager.AddLandingHistory(sceneName: sceneName))
         {
             Logger.LogError($"Failed to add landing history. sceneName={sceneName}");
             return false;
@@ -36,7 +36,7 @@ internal static class LandingHistoryHelpers
         }
 
         Logger.LogDebug("Clearing landing history.");
-        if (! landingHistoryManager.ClearLandingHistory())
+        if (!landingHistoryManager.ClearLandingHistory())
         {
             Logger.LogError("Failed to clear landing history.");
             return false;

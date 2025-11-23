@@ -17,12 +17,14 @@ internal static class ItemSpawnUtils
 
     public static GameObject GetShipGameObject()
     {
-        if (cachedShipGameObject != null) {
+        if (cachedShipGameObject != null)
+        {
             return cachedShipGameObject;
         }
 
         var shipGameObject = GameObject.Find("/Environment/HangarShip");
-        if (shipGameObject == null) {
+        if (shipGameObject == null)
+        {
             // Invalid state
             Logger.LogError("Failed to find Ship game object.");
             return null;
@@ -36,21 +38,24 @@ internal static class ItemSpawnUtils
     public static Vector3? GetBaseSpawnPosition()
     {
         var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null) {
+        if (startOfRound == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance is null.");
             return null;
         }
 
         var playerSpawnPositions = startOfRound.playerSpawnPositions;
-        if (playerSpawnPositions == null) {
+        if (playerSpawnPositions == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance.playerSpawnPositions is null.");
             return null;
         }
 
         var playerSpawnPositionTransform = playerSpawnPositions.ElementAtOrDefault(1);
-        if (playerSpawnPositionTransform == null) {
+        if (playerSpawnPositionTransform == null)
+        {
             // Invalid state
             Logger.LogError("Player spawn position is null for ID 1.");
             return null;
@@ -69,7 +74,7 @@ internal static class ItemSpawnUtils
         // Range for out of bounds items in the base game
         const float offsetXRange = 0.7f;
 
-        var itemIdUint = (uint) itemId;
+        var itemIdUint = (uint)itemId;
 
         // Randomize the seed to improve distribution
         var randomSeed = math.hash(new uint4(itemIdUint, 0xDEADBEEFu, 0x12345678u, 0x87654321u));
@@ -80,7 +85,7 @@ internal static class ItemSpawnUtils
         }
 
         var random = new Unity.Mathematics.Random(randomSeed);
-        float offsetX =  random.NextFloat(-offsetXRange, offsetXRange);
+        float offsetX = random.NextFloat(-offsetXRange, offsetXRange);
 
         cachedSpawnOffsetXByItemId[itemId] = offsetX;
 
@@ -92,35 +97,40 @@ internal static class ItemSpawnUtils
     public static bool SpawnItemInShip(Item item)
     {
         var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null) {
+        if (startOfRound == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance is null.");
             return false;
         }
 
         var spawnPrefab = item.spawnPrefab;
-        if (spawnPrefab == null) {
+        if (spawnPrefab == null)
+        {
             // Invalid state
             Logger.LogError("Item.spawnPrefab is null.");
             return false;
         }
 
         var shipGameObject = GetShipGameObject();
-        if (shipGameObject == null) {
+        if (shipGameObject == null)
+        {
             // Invalid state
             Logger.LogError("Failed to get Ship game object.");
             return false;
         }
 
         var elevatorTransform = startOfRound.elevatorTransform;
-        if (elevatorTransform == null) {
+        if (elevatorTransform == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance.elevatorTransform is null.");
             return false;
         }
 
         var baseSpawnPositionNullable = GetBaseSpawnPosition();
-        if (baseSpawnPositionNullable == null) {
+        if (baseSpawnPositionNullable == null)
+        {
             // Invalid state
             Logger.LogError("Failed to get spawn position.");
             return false;
@@ -143,7 +153,8 @@ internal static class ItemSpawnUtils
         );
 
         var grabbableObject = gameObject.GetComponent<GrabbableObject>();
-        if (grabbableObject == null) {
+        if (grabbableObject == null)
+        {
             // Invalid state
             Logger.LogError("Failed to get GrabbableObject component from spawned item.");
             Object.Destroy(gameObject);
@@ -156,7 +167,8 @@ internal static class ItemSpawnUtils
         grabbableObject.hasHitGround = true; // Disable drop sound effect
 
         var networkObject = gameObject.GetComponent<NetworkObject>();
-        if (networkObject == null) {
+        if (networkObject == null)
+        {
             // Invalid state
             Logger.LogError("Failed to get NetworkObject component from spawned item.");
             Object.Destroy(gameObject);

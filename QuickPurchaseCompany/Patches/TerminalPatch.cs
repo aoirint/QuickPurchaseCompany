@@ -13,7 +13,7 @@ internal class TerminalPatch
     [HarmonyPrefix]
     public static void SyncGroupCreditsClientRpcPrefix(Terminal __instance, int newGroupCredits, ref int numItemsInShip)
     {
-        if (! NetworkUtils.IsServer())
+        if (!NetworkUtils.IsServer())
         {
             Logger.LogDebug("Not the server. Skipping instant purchase logic.");
             return;
@@ -62,7 +62,7 @@ internal class TerminalPatch
     [HarmonyPostfix]
     public static void SyncGroupCreditsClientRpcPostfix(Terminal __instance, int newGroupCredits, ref int numItemsInShip)
     {
-        if (! NetworkUtils.IsServer())
+        if (!NetworkUtils.IsServer())
         {
             Logger.LogDebug("Not the server. Skipping instant purchase logic.");
             return;

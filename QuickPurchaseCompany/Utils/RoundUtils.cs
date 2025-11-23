@@ -10,7 +10,8 @@ internal static class RoundUtils
     public static bool IsInOrbit()
     {
         var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null) {
+        if (startOfRound == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance is null.");
             return false;
@@ -34,14 +35,16 @@ internal static class RoundUtils
     public static bool IsRoutingToCompany()
     {
         var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null) {
+        if (startOfRound == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance is null.");
             return false;
         }
 
         var currentLevel = startOfRound.currentLevel;
-        if (currentLevel == null) {
+        if (currentLevel == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance.currentLevel is null.");
             return false;
@@ -54,14 +57,16 @@ internal static class RoundUtils
     public static SelectableLevel GetLevelById(int levelId)
     {
         var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null) {
+        if (startOfRound == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance is null.");
             return null;
         }
 
         var levels = startOfRound.levels;
-        if (levels == null) {
+        if (levels == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance.levels is null.");
             return null;

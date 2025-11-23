@@ -10,7 +10,7 @@ internal static class RoundHelpers
 
     public static bool IsFirstDayOrbit()
     {
-        if (! RoundUtils.IsInOrbit())
+        if (!RoundUtils.IsInOrbit())
         {
             // Landed
             Logger.LogDebug("Not in orbit.");
@@ -18,14 +18,16 @@ internal static class RoundHelpers
         }
 
         var startOfRound = StartOfRound.Instance;
-        if (startOfRound == null) {
+        if (startOfRound == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance is null.");
             return false;
         }
 
         var gameStats = startOfRound.gameStats;
-        if (gameStats == null) {
+        if (gameStats == null)
+        {
             // Invalid state
             Logger.LogError("StartOfRound.Instance.gameStats is null.");
             return false;
@@ -47,7 +49,8 @@ internal static class RoundHelpers
         }
 
         var roundManager = RoundManager.Instance;
-        if (roundManager == null) {
+        if (roundManager == null)
+        {
             // Invalid state
             Logger.LogError("RoundManager.Instance is null.");
             return false;
@@ -55,7 +58,8 @@ internal static class RoundHelpers
 
         // Current selected level in orbit / Current landed level
         var currentLevel = roundManager.currentLevel;
-        if (currentLevel == null) {
+        if (currentLevel == null)
+        {
             // Invalid state
             Logger.LogError("RoundManager.Instance.currentLevel is null.");
             return false;
@@ -67,7 +71,7 @@ internal static class RoundHelpers
 
     public static bool IsInOrbitAndLastLandedOnCompanyAndRoutingToCompany()
     {
-        if (! RoundUtils.IsInOrbit())
+        if (!RoundUtils.IsInOrbit())
         {
             // Landed
             Logger.LogDebug("Not in orbit.");
@@ -95,14 +99,14 @@ internal static class RoundHelpers
             return false;
         }
 
-        if (! RoundUtils.IsSceneNameCompany(lastLandedSceneName))
+        if (!RoundUtils.IsSceneNameCompany(lastLandedSceneName))
         {
             // Last landed level is not company
             Logger.LogDebug("Last landed scene is not company.");
             return false;
         }
 
-        if (! RoundUtils.IsRoutingToCompany())
+        if (!RoundUtils.IsRoutingToCompany())
         {
             // Not routing to company
             Logger.LogDebug("Not routing to company.");

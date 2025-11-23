@@ -12,12 +12,14 @@ internal static class TerminalUtils
 
     public static Terminal GetTerminal()
     {
-        if (cachedTerminal != null) {
+        if (cachedTerminal != null)
+        {
             return cachedTerminal;
         }
 
         Terminal terminal = Object.FindObjectOfType<Terminal>();
-        if (terminal == null) {
+        if (terminal == null)
+        {
             // Invalid state
             Logger.LogError("Failed to find Terminal instance in the scene.");
             return null;
@@ -31,14 +33,16 @@ internal static class TerminalUtils
     public static Item GetBuyableItemByIndex(int index)
     {
         var terminal = GetTerminal();
-        if (terminal == null) {
+        if (terminal == null)
+        {
             // Invalid state
             Logger.LogError("Terminal is null.");
             return null;
         }
 
         var buyableItemsList = terminal.buyableItemsList;
-        if (buyableItemsList == null) {
+        if (buyableItemsList == null)
+        {
             // Invalid state
             Logger.LogError("Terminal.buyableItemsList is null.");
             return null;
