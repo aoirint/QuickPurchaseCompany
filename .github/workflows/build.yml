@@ -63,7 +63,7 @@ jobs:
 
           cp ./SkipDropshipCompany/Generated/manifest.g.json  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/manifest.json"
           cp ./assets/icon.png  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
-          cp ./README.md  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
+          cp ./assets/README.md  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
           cp ./assets/CHANGELOG.md  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
           cp ./LICENSE  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
 
