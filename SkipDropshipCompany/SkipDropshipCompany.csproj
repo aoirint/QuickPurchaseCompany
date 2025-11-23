@@ -31,7 +31,7 @@
 
   <PropertyGroup>
     <ModInfoTemplate>
-      $([System.IO.File]::ReadAllText('Templates/ModInfo.template.cs'))
+      $([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../Templates/ModInfo.template.cs'))
     </ModInfoTemplate>
     <ModInfoOut>
       $([System.String]::Copy('$(ModInfoTemplate)')
@@ -50,7 +50,7 @@
   </Target>
 
   <PropertyGroup>
-    <ManifestJsonTemplate>$([System.IO.File]::ReadAllText('assets/manifest.json'))</ManifestJsonTemplate>
+    <ManifestJsonTemplate>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../assets/manifest.json'))</ManifestJsonTemplate>
     <ManifestJsonOut>
       $([System.String]::Copy('$(ManifestJsonTemplate)')
         .Replace('"version_number": "0.0.0"', '"version_number": "$(Version)"')
