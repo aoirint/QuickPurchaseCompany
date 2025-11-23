@@ -16,7 +16,25 @@ This feature activates when any of these conditions are met:
 - While landed on the Company
 - In orbit on the next day after landing on the Company, still routing to the Company (current session only)
 
+## Credit
+
+Inspired by the following project.
+
+- [InstantBuy by nexor-source](https://github.com/nexor-source/InstantBuy)
+
 ## Development
+
+Install .NET SDK 9.0.
+
+- <https://dotnet.microsoft.com/en-us/download/dotnet/9.0>
+
+Install Lethal Company v73 via Steam.
+
+Restore NuGet packages.
+
+```powershell
+dotnet restore --locked-mode
+```
 
 Create a new directory `lib` at the repository root.
 Copy a DLL file into `lib/` from `C:/Program Files (x86)/Steam/steamapps/common/Lethal Company`.
@@ -24,6 +42,12 @@ Copy a DLL file into `lib/` from `C:/Program Files (x86)/Steam/steamapps/common/
 - `Lethal Company_Data/Managed/Assembly-CSharp.dll`
 - `Lethal Company_Data/Managed/Unity.Mathematics.dll`
 - `Lethal Company_Data/Managed/Unity.Netcode.Runtime.dll`
+
+## Code format
+
+```powershell
+dotnet format
+```
 
 ## Build
 
@@ -56,12 +80,6 @@ DOTNET_CLI_UI_LANGUAGE=en dotnet build --configuration Release
 5. Set `Logging.Console.Enabled` to `true`.
 6. Set `Logging.Console.LogLevels` to `All`.
 7. Launch `Lethal Company.exe` again.
-
-## Credit
-
-Inspired by the following projects:
-
-- [InstantBuy by nexor-source](https://github.com/nexor-source/InstantBuy)
 
 ## Test Scenarios
 
