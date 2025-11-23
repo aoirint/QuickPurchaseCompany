@@ -88,6 +88,8 @@ DOTNET_CLI_UI_LANGUAGE=en dotnet build --configuration Release
 
 ## Test Scenarios
 
+TODO: Update the test scenarios according to the latest first day orbit condition.
+
 ### 1. Purchase on the first day orbit
 
 1. Start a new game.

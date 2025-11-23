@@ -12,8 +12,8 @@ This mod works for v73+. Maybe works for the earlier versions, but not tested.
 
 Direct ship delivery feature activates when any of these conditions are met:
 
-- In orbit on the first day (also the day after ejected)
 - While landed on the Company
+- In orbit on the first day (also the day after ejected) and routing to the Company
 - In orbit on the next day after landing on the Company, still routing to the Company (in the same session only)
 
 You can still use the dropship on the other moons as usual.
