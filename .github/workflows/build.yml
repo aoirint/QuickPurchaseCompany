@@ -13,6 +13,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    outputs:
+      release_mode: ${{ steps.generate-version.outputs.release_mode }}
+      app_version: ${{ steps.generate-version.outputs.app_version }}
+      git_version: ${{ steps.generate-version.outputs.git_version }}
+
     steps:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
@@ -68,17 +73,6 @@ jobs:
           retention-days: 14
           compression-level: 0
 
-      - name: Publish Release
-        uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b # v1.20.0
-        if: steps.generate-version.outputs.release_mode != 'edge'
-        with:
-          tag: ${{ steps.generate-version.outputs.git_version }}
-          commit: ${{ github.sha }}
-          draft: false
-          prerelease: ${{ steps.generate-version.outputs.release_mode != 'latest' }}
-          makeLatest: ${{ steps.generate-version.outputs.release_mode == 'latest' }}
-          generateReleaseNotes: true
-
       - name: Create summary
         if: always()
         run: |
@@ -104,3 +98,34 @@ jobs:
             echo "| Artifact | ${ARTIFACT_LINK_MARKDOWN} |"
             echo "| Artifact Digest | ${ARTIFACT_DIGEST_MARKDOWN} |"
           } >> "${GITHUB_STEP_SUMMARY}"
+
+  release:
+    needs:
+      - build
+    if: needs.build.outputs.release_mode != 'edge'
+
+    runs-on: ubuntu-slim
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: artifact
+          path: ./tmp_artifacts
+
+      - name: Publish Release
+        uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b # v1.20.0
+        with:
+          tag: ${{ needs.build.outputs.git_version }}
+          commit: ${{ github.sha }}
+          draft: false
+          prerelease: ${{ needs.build.outputs.release_mode != 'latest' }}
+          makeLatest: ${{ needs.build.outputs.release_mode == 'latest' }}
+          generateReleaseNotes: true
+          artifacts: |
+            tmp_artifacts/*.zip
+          artifactErrorsFailBuild: true
+          artifactContentType: application/zip
