@@ -9,13 +9,13 @@ inputs:
 outputs:
   release_mode:
     description: 'latest, prerelease, edge'
-    value: ${{ steps.check-release-mode.outputs.mode }}
+    value: ${{ steps.release-mode.outputs.mode }}
   app_version:
     description: 'Application version'
-    value: ${{ steps.generate-app-version.outputs.version }}
+    value: ${{ steps.app-version.outputs.version }}
   git_version:
     description: 'Git tag version'
-    value: ${{ steps.generate-git-version.outputs.version }}
+    value: ${{ steps.git-version.outputs.version }}
 
 runs:
   using: "composite"
