@@ -84,6 +84,13 @@ jobs:
           TIME_DURATION_MS=$(( ${{ steps.end-time.outputs.time_ms }} - ${{ steps.start-time.outputs.time_ms }} ))
           TIME_DURATION_S=$(( TIME_DURATION_MS / 1000 )).$(( TIME_DURATION_MS % 1000 ))
 
+          ARTIFACT_LINK_MARKDOWN=
+          ARTIFACT_DIGEST_MARKDOWN=
+          if [ "${{ steps.upload-artifact.outcome }}" = "success" ]; then
+            ARTIFACT_LINK_MARKDOWN="[Download](${{ steps.upload-artifact.outputs.artifact-url }})"
+            ARTIFACT_DIGEST_MARKDOWN="\`${{ steps.upload-artifact.outputs.artifact-digest }}\`"
+          fi
+
           {
             echo "| Metric | Value |"
             echo "| :----- | :---- |"
@@ -93,11 +100,6 @@ jobs:
             echo "| App Version | ${{ steps.generate-version.outputs.app_version }} |"
             echo "| Git Version | [${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }}) |"
             echo "| Time Duration | ${TIME_DURATION_S}s |"
-          } >> "${GITHUB_STEP_SUMMARY}"
-          
-          if [ "${{ steps.upload-artifact.outcome }}" = "success" ]; then
-            {
-              echo "| Artifact | [Download](${{ steps.upload-artifact.outputs.artifact-url }}) |"
-              echo "| Artifact Digest | \`${{ steps.upload-artifact.outputs.artifact-digest }}\` |"
-            } >> "${GITHUB_STEP_SUMMARY}"
+            echo "| Artifact | ${ARTIFACT_LINK_MARKDOWN} |"
+            echo "| Artifact Digest | ${ARTIFACT_DIGEST_MARKDOWN} |"
           fi
