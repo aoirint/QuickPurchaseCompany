@@ -74,6 +74,14 @@ DOTNET_CLI_UI_LANGUAGE=en dotnet build
 DOTNET_CLI_UI_LANGUAGE=en dotnet build --configuration Release
 ```
 
+## Release
+
+1. Replace version in `SkipDropshipCompany/SkipDropshipCompany.csproj` as semver format, e.g. `1.2.3`.
+2. Commit and push the changes.
+3. CI will create a GitHub Release automatically.
+4. Download the release artifact from the GitHub Release page.
+5. Upload the artifact to Thunderstore. **NOTE: prerelease version is not supported, e.g. `1.2.3-beta.1`.**
+
 ## Debugging
 
 ### r2modman
