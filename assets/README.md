@@ -18,6 +18,8 @@ Direct ship delivery feature activates when any of these conditions are met:
 
 You can still use the dropship on the other moons as usual.
 
+Cruiser still uses the dropship for delivery.
+
 ## Who needs to install
 
 Host only. Clients do not need to install this mod, but it's safe to install on clients as it will have no effect.
