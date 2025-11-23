@@ -68,17 +68,22 @@ runs:
 
         echo "version=${APP_VERSION}" >> "${GITHUB_OUTPUT}"
 
-    - name: Replace version in csproj
-      id: replace-version
-      if: ${{ steps.release-mode.outputs.mode == 'edge' }}
-      shell: bash
-      run: |
-        APP_VERSION="${{ steps.app-version.outputs.version }}"
-        sed -i "/APP_VERSION_MARKER/{n; s|<Version>.*</Version>|<Version>${APP_VERSION}</Version>|;}" SkipDropshipCompany/SkipDropshipCompany.csproj
-
     - name: Generate git version
       id: git-version
       shell: bash
       run: |
         APP_VERSION="${{ steps.app-version.outputs.version }}"
         echo "version=v${APP_VERSION}" >> "${GITHUB_OUTPUT}"
+
+    - name: Replace version in csproj
+      shell: bash
+      run: |
+        APP_VERSION="${{ steps.app-version.outputs.version }}"
+        sed -i "/APP_VERSION_MARKER/{n; s|<Version>.*</Version>|<Version>${APP_VERSION}</Version>|;}" SkipDropshipCompany/SkipDropshipCompany.csproj
+
+    - name: Replace version in manifest.json
+      shell: bash
+      run: |
+        APP_VERSION="${{ steps.app-version.outputs.version }}"
+        jq --arg ver "${APP_VERSION}" '.version_number = $ver' SkipDropshipCompany/manifest.json > SkipDropshipCompany/manifest.tmp.json
+        mv SkipDropshipCompany/manifest.tmp.json SkipDropshipCompany/manifest.json

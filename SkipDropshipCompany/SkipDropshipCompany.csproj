@@ -14,6 +14,10 @@
       https://nuget.samboy.dev/v3/index.json
     </RestoreAdditionalProjectSources>
     <RootNamespace>SkipDropshipCompany</RootNamespace>
+      <CoreCompileDependsOn>
+        GenerateModInfo;
+        $(CoreCompileDependsOn)
+    </CoreCompileDependsOn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,39 +32,31 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <ModInfoTemplate>
-      $([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../Templates/ModInfo.template.cs'))
-    </ModInfoTemplate>
-    <ModInfoOut>
-      $([System.String]::Copy('$(ModInfoTemplate)')
-          .Replace('__CSPROJ_ASSEMBLY_NAME__', '$(AssemblyName)')
-          .Replace('__CSPROJ_PRODUCT__', '$(Product)')
-          .Replace('__CSPROJ_VERSION__', '$(Version)')
-      )
-    </ModInfoOut>
-  </PropertyGroup>
-  <Target Name="GenerateModInfo" BeforeTargets="BeforeCompile">
+  <!-- Code generation -->
+  <ItemGroup>
+    <Compile Remove="Generated\**\*.cs" />
+  </ItemGroup>
+  <Target Name="GenerateModInfo">
+    <PropertyGroup>
+      <ModInfoTemplate>
+        $([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../Templates/ModInfo.template.cs'))
+      </ModInfoTemplate>
+      <ModInfoOut>
+        $([System.String]::Copy('$(ModInfoTemplate)')
+            .Replace('__CSPROJ_ASSEMBLY_NAME__', '$(AssemblyName)')
+            .Replace('__CSPROJ_PRODUCT__', '$(Product)')
+            .Replace('__CSPROJ_VERSION__', '$(Version)')
+        )
+      </ModInfoOut>
+      <ModInfoFile>$(MSBuildProjectDirectory)/Generated/ModInfo.g.cs</ModInfoFile>
+    </PropertyGroup>
     <WriteLinesToFile
-        File="$(MSBuildProjectDirectory)/Generated/ModInfo.g.cs"
+        File="$(ModInfoFile)"
         Overwrite="true"
         Lines="$(ModInfoOut)"
     />
-  </Target>
-
-  <PropertyGroup>
-    <ManifestJsonTemplate>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/../assets/manifest.json'))</ManifestJsonTemplate>
-    <ManifestJsonOut>
-      $([System.String]::Copy('$(ManifestJsonTemplate)')
-        .Replace('"version_number": "0.0.0"', '"version_number": "$(Version)"')
-      )
-    </ManifestJsonOut>
-  </PropertyGroup>
-  <Target Name="GenerateManifestJson" BeforeTargets="BeforeCompile">
-    <WriteLinesToFile
-      File="$(MSBuildProjectDirectory)/Generated/manifest.g.json"
-      Overwrite="true"
-      Lines="$(ManifestJsonOut)"
-    />
+    <ItemGroup>
+      <Compile Include="$(ModInfoFile)" />
+    </ItemGroup>
   </Target>
 </Project>
