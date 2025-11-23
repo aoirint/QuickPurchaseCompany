@@ -4,21 +4,17 @@ description: "Generate application and git version based on csproj version and g
 inputs:
   csproj_file:
     description: 'csproj file path'
-    type: string
     required: true
 
 outputs:
   release_mode:
     description: 'latest, prerelease, edge'
-    type: string
     value: ${{ steps.check-release-mode.outputs.mode }}
   app_version:
     description: 'Application version'
-    type: string
     value: ${{ steps.generate-app-version.outputs.version }}
   git_version:
     description: 'Git tag version'
-    type: string
     value: ${{ steps.generate-git-version.outputs.version }}
 
 runs:
