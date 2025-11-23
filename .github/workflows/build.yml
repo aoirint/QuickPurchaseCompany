@@ -90,7 +90,7 @@ jobs:
 
           GIT_VERSION_MARKDOWN=${{ steps.generate-version.outputs.git_version }}
           if [ "${{ steps.generate-version.outputs.release_mode }}" != "edge" ]; then
-            GIT_VERSION_MARKDOWN=[${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }})
+            GIT_VERSION_MARKDOWN="[${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }})"
           fi
 
           ARTIFACT_LINK_MARKDOWN=
