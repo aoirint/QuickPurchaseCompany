@@ -67,9 +67,11 @@ jobs:
           cp ./assets/CHANGELOG.md  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
           cp ./LICENSE  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
 
-          cd "${TMP_ARTIFACT_DIR}"
+          cd "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}"
 
-          7z a -r "${ARTIFACT_STEM}.zip" "${ARTIFACT_STEM}/"
+          7z a -r "../${ARTIFACT_STEM}.zip" .
+
+          cd ..
           rm -rf "${ARTIFACT_STEM:?}/"
  
       - name: Upload artifact
