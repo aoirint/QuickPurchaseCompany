@@ -2,6 +2,8 @@
 
 A Lethal Company mod that skip the dropship when you're on the Company or in other limited situations.
 
+This mod works for v73+. Maybe works for the earlier versions, but not tested.
+
 ## What it does
 
 - Direct Ship Delivery: Purchased items are delivered directly to your ship instead of being delivered by dropship.
