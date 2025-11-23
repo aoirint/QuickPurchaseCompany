@@ -85,5 +85,5 @@ runs:
       shell: bash
       run: |
         APP_VERSION="${{ steps.app-version.outputs.version }}"
-        jq --arg ver "${APP_VERSION}" '.version_number = $ver' SkipDropshipCompany/manifest.json > SkipDropshipCompany/manifest.tmp.json
-        mv SkipDropshipCompany/manifest.tmp.json SkipDropshipCompany/manifest.json
+        jq --arg ver "${APP_VERSION}" '.version_number = $ver' assets/manifest.json > assets/manifest.tmp.json
+        mv assets/manifest.tmp.json assets/manifest.json
