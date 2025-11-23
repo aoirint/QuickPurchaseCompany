@@ -43,7 +43,7 @@
   </PropertyGroup>
   <Target Name="GenerateModInfo" BeforeTargets="BeforeCompile">
     <WriteLinesToFile
-        File="Generated/ModInfo.g.cs"
+        File="$(MSBuildProjectDirectory)/Generated/ModInfo.g.cs"
         Overwrite="true"
         Lines="$(ModInfoOut)"
     />
@@ -59,7 +59,7 @@
   </PropertyGroup>
   <Target Name="GenerateManifestJson" BeforeTargets="BeforeCompile">
     <WriteLinesToFile
-      File="Generated/manifest.g.json"
+      File="$(MSBuildProjectDirectory)/Generated/manifest.g.json"
       Overwrite="true"
       Lines="$(ManifestJsonOut)"
     />
