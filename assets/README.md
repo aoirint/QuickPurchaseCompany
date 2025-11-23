@@ -81,6 +81,16 @@ This mod only skips the dropship when on the Company or in other limited situati
 
 This mod does not have such a configuration option yet.
 
+## Differences from [befuddled_productions/Quick_Buy_Menu](https://thunderstore.io/c/lethal-company/p/befuddled_productions/Quick_Buy_Menu/)
+
+`befuddled_productions/Quick_Buy_Menu` adds some chat commands to purchase items quickly.
+
+This mod uses the terminal as usual to purchase items.
+
+`befuddled_productions/Quick_Buy_Menu` store the purchased items into the player's inventory directly.
+
+This mod stores the purchased items on the ship directly.
+
 ## Differences from [FlipMods/FasterItemDropship](https://thunderstore.io/c/lethal-company/p/FlipMods/FasterItemDropship/)
 
 `FlipMods/FasterItemDropship` reduces the waiting time for the dropship to arrive after purchasing an item.
