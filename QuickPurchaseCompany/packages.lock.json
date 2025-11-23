@@ -24,6 +24,16 @@
         "resolved": "2.1.0",
         "contentHash": "VCG3QRiqNdW9ku2FEcNsbK+HKxrZmW0VxwMNyLNO7h0xGorU+C6vBHN8Qq4eAL5fU11Uks5x2uoYdqEoKD3P8A=="
       },
+      "LethalCompany.GameLibs.Steam": {
+        "type": "Direct",
+        "requested": "[73.0.0-ngd.0, )",
+        "resolved": "73.0.0-ngd.0",
+        "contentHash": "iaHCHoJTFiTnAyAYIrEbjCJOOuhcJ42+KJnEbmCmf4UdkhjSwwio2bcdPCbchodB9kEp+3v3ATgkBwYn56/Gdw==",
+        "dependencies": {
+          "Newtonsoft.JSON": "13.0.3",
+          "UnityEngine.Modules": "2022.3.9"
+        }
+      },
       "UnityEngine.Modules": {
         "type": "Direct",
         "requested": "[2022.3.62, )",
@@ -87,6 +97,11 @@
           "System.Reflection.Emit.Lightweight": "4.7.0",
           "System.Reflection.TypeExtensions": "4.7.0"
         }
+      },
+      "Newtonsoft.Json": {
+        "type": "Transitive",
+        "resolved": "13.0.3",
+        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
       "System.Collections": {
         "type": "Transitive",
