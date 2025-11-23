@@ -79,6 +79,11 @@ jobs:
           TIME_DURATION_MS=$(( ${{ steps.end-time.outputs.time_ms }} - ${{ steps.start-time.outputs.time_ms }} ))
           TIME_DURATION_S=$(( TIME_DURATION_MS / 1000 )).$(( TIME_DURATION_MS % 1000 ))
 
+          GIT_VERSION_MARKDOWN=${{ steps.generate-version.outputs.git_version }}
+          if [ "${{ steps.generate-version.outputs.release_mode }}" != "edge" ]; then
+            GIT_VERSION_MARKDOWN=[${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }})
+          fi
+
           ARTIFACT_LINK_MARKDOWN=
           ARTIFACT_DIGEST_MARKDOWN=
           if [ "${{ steps.upload-artifact.outcome }}" = "success" ]; then
@@ -93,7 +98,7 @@ jobs:
             echo "| Commit Hash | [${GITHUB_SHA:0:7}](https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}) |"
             echo "| Release Mode | ${{ steps.generate-version.outputs.release_mode }} |"
             echo "| App Version | ${{ steps.generate-version.outputs.app_version }} |"
-            echo "| Git Version | [${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }}) |"
+            echo "| Git Version | ${GIT_VERSION_MARKDOWN} |"
             echo "| Time Duration | ${TIME_DURATION_S}s |"
             echo "| Artifact | ${ARTIFACT_LINK_MARKDOWN} |"
             echo "| Artifact Digest | ${ARTIFACT_DIGEST_MARKDOWN} |"
