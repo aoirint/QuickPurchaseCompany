@@ -1,4 +1,4 @@
-## v0.1.5 - 2025-11-24
+## v0.1.6 - 2025-11-24
 
 - Add `Enabled` config option to enable/disable this mod without uninstalling.
 
