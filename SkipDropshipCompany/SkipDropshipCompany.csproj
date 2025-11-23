@@ -5,7 +5,7 @@
     <AssemblyName>com.aoirint.SkipDropshipCompany</AssemblyName>
     <Product>SkipDropshipCompany</Product>
     <!-- !!APP_VERSION_MARKER!! -->
-    <Version>0.0.2</Version>
+    <Version>0.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
