@@ -25,6 +25,7 @@ jobs:
         with:
           dotnet-version: '9.x'
           cache: true
+          cache-dependency-path: QuickPurchaseCompany/packages.lock.json
 
       - name: Restore NuGet packages
         run: dotnet restore --locked-mode
