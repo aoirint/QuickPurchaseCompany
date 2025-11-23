@@ -1,0 +1,106 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Generate version
+        id: generate-version
+        uses: ./.github/actions/generate-version
+        with:
+          csproj_file: "QuickPurchaseCompany/QuickPurchaseCompany.csproj"
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@d4c94342e560b34958eacfc5d055d21461ed1c5d # v5.0.0
+        with:
+          dotnet-version: '9.x'
+          cache: true
+          cache-dependency-path: QuickPurchaseCompany/packages.lock.json
+
+      - name: Restore NuGet packages
+        run: dotnet restore --locked-mode
+
+      - name: Record start time
+        id: start-time
+        run: echo "time_ms=$(date +%s%3N)" >> "${GITHUB_OUTPUT}"
+
+      - name: Run dotnet build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Record end time
+        id: end-time
+        if: always()
+        run: echo "time_ms=$(date +%s%3N)" >> "${GITHUB_OUTPUT}"
+
+      - name: Create artifact
+        run: |
+          TMP_ARTIFACT_DIR=./tmp_artifacts
+          ARTIFACT_STEM=QuickPurchaseCompany-v${{ steps.generate-version.outputs.app_version }}
+
+          mkdir -p "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}"
+
+          mv ./QuickPurchaseCompany/bin/Release/netstandard2.1/QuickPurchaseCompany.dll  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
+
+          cd "${TMP_ARTIFACT_DIR}"
+
+          7z a -r "${ARTIFACT_STEM}.zip" "${ARTIFACT_STEM}/"
+          rm -rf "${ARTIFACT_STEM:?}/"
+ 
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: artifact
+          path: ./tmp_artifacts/*.zip
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+
+      - name: Publish Release
+        uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b # v1.20.0
+        if: steps.generate-version.outputs.release_mode != 'edge'
+        with:
+          tag: ${{ steps.generate-version.outputs.git_version }}
+          commit: ${{ github.sha }}
+          draft: false
+          prerelease: ${{ steps.generate-version.outputs.release_mode != 'latest' }}
+          makeLatest: ${{ steps.generate-version.outputs.release_mode == 'latest' }}
+          generateReleaseNotes: true
+
+      - name: Create summary
+        if: always()
+        run: |
+          TIME_DURATION_MS=$(( ${{ steps.end-time.outputs.time_ms }} - ${{ steps.start-time.outputs.time_ms }} ))
+          TIME_DURATION_S=$(( TIME_DURATION_MS / 1000 )).$(( TIME_DURATION_MS % 1000 ))
+
+          ARTIFACT_LINK_MARKDOWN=
+          ARTIFACT_DIGEST_MARKDOWN=
+          if [ "${{ steps.upload-artifact.outcome }}" = "success" ]; then
+            ARTIFACT_LINK_MARKDOWN="[Download](${{ steps.upload-artifact.outputs.artifact-url }})"
+            ARTIFACT_DIGEST_MARKDOWN="\`${{ steps.upload-artifact.outputs.artifact-digest }}\`"
+          fi
+
+          {
+            echo "| Metric | Value |"
+            echo "| :----- | :---- |"
+            echo "| Result | ${{ job.status == 'success' && '✅' || '❌' }} |"
+            echo "| Commit Hash | [${GITHUB_SHA:0:7}](https://github.com/${GITHUB_REPOSITORY}/commit/${GITHUB_SHA}) |"
+            echo "| Release Mode | ${{ steps.generate-version.outputs.release_mode }} |"
+            echo "| App Version | ${{ steps.generate-version.outputs.app_version }} |"
+            echo "| Git Version | [${{ steps.generate-version.outputs.git_version }}](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${{ steps.generate-version.outputs.git_version }}) |"
+            echo "| Time Duration | ${TIME_DURATION_S}s |"
+            echo "| Artifact | ${ARTIFACT_LINK_MARKDOWN} |"
+            echo "| Artifact Digest | ${ARTIFACT_DIGEST_MARKDOWN} |"
+          } >> "${GITHUB_STEP_SUMMARY}"
