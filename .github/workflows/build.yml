@@ -61,7 +61,7 @@ jobs:
 
           mv ./SkipDropshipCompany/bin/Release/netstandard2.1/SkipDropshipCompany.dll  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
 
-          cp ./SkipDropshipCompany/Generated/manifest.g.json  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/manifest.json"
+          cp ./assets/manifest.json  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/manifest.json"
           cp ./assets/icon.png  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
           cp ./assets/README.md  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
           cp ./assets/CHANGELOG.md  "${TMP_ARTIFACT_DIR}/${ARTIFACT_STEM}/"
