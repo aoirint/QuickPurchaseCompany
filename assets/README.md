@@ -13,7 +13,7 @@ This mod works for v73+. Maybe works for the earlier versions, but not tested.
 Direct ship delivery feature activates when any of these conditions are met:
 
 - While landed on the Company
-- In orbit on the first day (also the day after ejected) and routing to the Company
+- In orbit on the first day (also the day after ejected)
 - In orbit on the next day after landing on the Company, still routing to the Company (in the same session only)
 
 You can still use the dropship on the other moons as usual.
@@ -32,6 +32,12 @@ Purchased items will spawn inside your ship, near the default item position for 
 
 Each item type will be placed with a small offset to avoid overlapping.
 
+## Configuration
+
+| Name | Type | Default | Description |
+|:--------|:-----|:--------|:------------|
+| Requires rerouting on the first day | bool | false | If true, rerouting to the company will be required to skip the dropship on the first day. |
+
 ## FAQ
 
 ### Can't use the dropship to attract enemies on eclipse day?
@@ -42,6 +48,8 @@ You can still use it.
 - Purchase items after starting landing on a moon
 
 The dropship will arrive as usual on that moon in these cases.
+
+You can change the first day behavior in configuration if your first day is eclipsed or you are using a mod like [stormytuna/EclipseOnly](https://thunderstore.io/c/lethal-company/p/stormytuna/EclipseOnly/).
 
 ### Already purchased items before the conditions are met. Will they be delivered directly to the ship?
 
