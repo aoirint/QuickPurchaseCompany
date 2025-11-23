@@ -32,7 +32,7 @@ public class SkipDropshipCompany : BaseUnityPlugin
             "SkipDropshipCompany",
             "Requires rerouting on the first day",
             false,
-            "If true, rerouting to the company will be required to skip the dropship on the first day. This config will be applied immediately without restarting the game."
+            "If true, rerouting to the company will be required to skip the dropship on the first day."
         );
 
         harmony.PatchAll();
