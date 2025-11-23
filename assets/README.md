@@ -71,6 +71,28 @@ At least the following versions are assumed to be compatible.
 
 No test has been done for them. It is recommended to use Lethal Company v73 or later.
 
+## Differences from [Nexor/InstantBuy](https://thunderstore.io/c/lethal-company/p/Nexor/InstantBuy/)
+
+`Nexor/InstantBuy` skips the dropship for all purchases by default.
+
+This mod only skips the dropship when on the Company or in other limited situations.
+
+`Nexor/InstantBuy` can be configured to disable specified items from instant purchases.
+
+This mod does not have such a configuration option yet.
+
+## Differences from [FlipMods/FasterItemDropship](https://thunderstore.io/c/lethal-company/p/FlipMods/FasterItemDropship/)
+
+`FlipMods/FasterItemDropship` reduces the waiting time for the dropship to arrive after purchasing an item.
+
+This mod just spawns the purchased items directly on your ship instead of the dropship delivery.
+
+## Differences from [zoomstv/FasterRocket](https://thunderstore.io/c/lethal-company/p/zoomstv/FasterRocket/)
+
+`zoomstv/FasterRocket` reduces the waiting time for the dropship to arrive after landing on a moon.
+
+This mod just spawns the purchased items directly on your ship instead of the dropship delivery.
+
 ## Credit
 
 Highly inspired by the following project.
