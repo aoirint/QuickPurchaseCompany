@@ -1,35 +1,38 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <!-- DLL name / Mod GUID -->
     <AssemblyName>com.aoirint.SkipDropshipCompany</AssemblyName>
+    <!-- Mod name -->
     <Product>SkipDropshipCompany</Product>
+    <RootNamespace>SkipDropshipCompany</RootNamespace>
     <!-- !!APP_VERSION_MARKER!! -->
     <Version>0.1.7</Version>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
+    <!-- Target framework. https://learn.microsoft.com/en-us/dotnet/standard/frameworks -->
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <!-- C# language version. https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/configure-language-version -->
+    <LangVersion>13.0</LangVersion>
     <RestoreAdditionalProjectSources>
       https://api.nuget.org/v3/index.json;
-      https://nuget.bepinex.dev/v3/index.json;
-      https://nuget.samboy.dev/v3/index.json
+      https://nuget.bepinex.dev/v3/index.json
     </RestoreAdditionalProjectSources>
-    <RootNamespace>SkipDropshipCompany</RootNamespace>
-      <CoreCompileDependsOn>
-        GenerateModInfo;
-        $(CoreCompileDependsOn)
+    <CoreCompileDependsOn>
+      GenerateModInfo;
+      $(CoreCompileDependsOn)
     </CoreCompileDependsOn>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Runtime dependencies -->
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+
+    <!-- Development dependencies -->
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Core" Version="5.*" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
-    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="73.0.0-ngd.0" />
+    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all" />
+
+    <!-- Compile-time only dependencies -->
+    <PackageReference Include="LethalCompany.GameLibs.Steam" Version="73.0.0-ngd.0" IncludeAssets="compile" />
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.62" IncludeAssets="compile" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
 
   <!-- Code generation -->
