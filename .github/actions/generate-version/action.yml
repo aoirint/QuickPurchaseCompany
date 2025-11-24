@@ -25,9 +25,9 @@ runs:
       id: csproj-version
       shell: bash
       run: |
-        # Read the version from the next line after APP_VERSION_MARKER in the csproj file
+        # Read the version from the next line after !!APP_VERSION_MARKER!! in the csproj file
         # tr and xargs for trimming whitespace, line endings
-        CSPROJ_VERSION=$(sed -n '/APP_VERSION_MARKER/{n; s|<Version>\(.*\)</Version>|\1|; p;}' "${{ inputs.csproj_file }}" | tr -d '\r' | xargs)
+        CSPROJ_VERSION=$(sed -n '/!!APP_VERSION_MARKER!!/{n; s|<Version>\(.*\)</Version>|\1|; p;}' "${{ inputs.csproj_file }}" | tr -d '\r' | xargs)
         echo "version=${CSPROJ_VERSION}" >> "${GITHUB_OUTPUT}"
 
     - name: Check release mode
@@ -79,7 +79,7 @@ runs:
       shell: bash
       run: |
         APP_VERSION="${{ steps.app-version.outputs.version }}"
-        sed -i "/APP_VERSION_MARKER/{n; s|<Version>.*</Version>|<Version>${APP_VERSION}</Version>|;}" SkipDropshipCompany/SkipDropshipCompany.csproj
+        sed -i "/!!APP_VERSION_MARKER!!/{n; s|<Version>.*</Version>|<Version>${APP_VERSION}</Version>|;}" SkipDropshipCompany/SkipDropshipCompany.csproj
 
     - name: Replace version in manifest.json
       shell: bash
