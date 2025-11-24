@@ -82,7 +82,7 @@ runs:
       shell: bash
       run: |
         APP_VERSION="${{ steps.app-version.outputs.version }}"
-        sed -i "/!!APP_VERSION_MARKER!!/{n; s|<Version>.*</Version>|<Version>${APP_VERSION}</Version>|;}" SkipDropshipCompany/SkipDropshipCompany.csproj
+        sed -i "/!!APP_VERSION_MARKER!!/{n; s|<Version>.*</Version>|<Version>${APP_VERSION}</Version>|;}" "${{ inputs.csproj_file }}"
 
     - name: Replace version in manifest.json
       shell: bash
