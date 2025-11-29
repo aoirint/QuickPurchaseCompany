@@ -71,7 +71,7 @@ DOTNET_CLI_UI_LANGUAGE=en dotnet build --configuration Release
 
 1. Open r2modman.
 2. Open `Config editor`.
-3. Open `BeplnEx\config\BepInEx.cfg` in the config list.
+3. Open `BepInEx\config\BepInEx.cfg` in the config list.
 4. Set `Logging.Console.LogLevels` to `All`.
 5. Open `Settings > Import local mod`.
 6. Select the DLL file from `bin/Debug/netstandard2.1/`.
@@ -79,9 +79,9 @@ DOTNET_CLI_UI_LANGUAGE=en dotnet build --configuration Release
 
 ### Manual
 
-1. Install BeplnEx: https://docs.bepinex.dev/articles/user_guide/installation/index.html
-2. Launch `Lethal Company.exe` and exit to generate the BeplnEx config files.
-3. Open `C:/Program Files (x86)/Steam/steamapps/common/Lethal Company/BeplnEx/config/BepInEx.cfg`.
+1. Install BepInEx: https://docs.bepinex.dev/articles/user_guide/installation/index.html
+2. Launch `Lethal Company.exe` and exit to generate the BepInEx config files.
+3. Open `C:/Program Files (x86)/Steam/steamapps/common/Lethal Company/BepInEx/config/BepInEx.cfg`.
 4. Copy the DLL file into `C:/Program Files (x86)/Steam/steamapps/common/Lethal Company/BepInEx/plugins/` from `bin/Debug/netstandard2.1/`.
 5. Set `Logging.Console.Enabled` to `true`.
 6. Set `Logging.Console.LogLevels` to `All`.
